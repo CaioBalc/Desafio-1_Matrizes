@@ -1,64 +1,45 @@
 <?php
 
-// $matrizes1_linha = intval(1, 2);
-// $matrizes1_coluna = intval(4, 5);
-// $matrizes2_linha = intval(1, 2);
-// $matrizes2_coluna = intval(4, 5);
+# Matriz Quadrada:
 
-// #echo $matrizes1_linha;
+# Define matrizes
+$mq1l1 = array(1, 2);
+$mq1l2 = array(3, 4);
+$mq2c1 = array(1, 3);
+$mq2c2 = array(2, 4);
 
-// $resultado = ($matrizes1_linha * $matrizes2_linha);
-// var_dump($resultado);
+#Multiplica as linhas com as colunas
+$contaq1 = array_map(function($mq1l1, $mq2c1) {
+    return $mq1l1 * $mq2c1;
+}, $mq1l1, $mq2c1);
 
+$contaq2 = array_map(function($mq1l2, $mq2c1) {
+    return $mq1l2 * $mq2c1;
+}, $mq1l2, $mq2c1);
 
-// $matriz1 = $matriz1_linha * $matriz2_linha;
-// foreach ($matriz1 as $resultado) {
-//     #$resultado = $resultado * 2;
-//     var_dump($resultado);
-// }
+$contaq3 = array_map(function($mq1l1, $mq2c2) {
+    return $mq1l1 * $mq2c2;
+}, $mq1l1, $mq2c2);
 
+$contaq4 = array_map(function($mq1l2, $mq2c2) {
+    return $mq1l2 * $mq2c2;
+}, $mq1l2, $mq2c2);
 
-$m1l1 = array(1, 2);
-$m2c1 = array(1, 3);
-$m1l2 = array(3, 4);
-$m2c2 = array(2, 4);
+#Soma os resultados
+$resultadoq1 = array_sum($contaq1);
+$resultadoq2 = array_sum($contaq2);
+$resultadoq3 = array_sum($contaq3);
+$resultadoq4 = array_sum($contaq4);
 
-// for($i = count($m1l1); $i > 0; $i--){
-//     for($i = count($m2c1); $i > 0; $i--){
-//         $conta = (count($m1l1) * count($m2c1));
-//         var_dump($conta);
-//     }
-// }
+#Imprime os resultados
+echo <<< EOL
+    Matriz quadrada:
+    $resultadoq1 | $resultadoq3
+    $resultadoq2 | $resultadoq4
 
-$resultado1 = array_map(function($m1l1, $m2c1) {
-    return $m1l1 * $m2c1;
-}, $m1l1, $m2c1);
+EOL;
 
-$resultado2 = array_map(function($m1l2, $m2c1) {
-    return $m1l2 * $m2c1;
-}, $m1l2, $m2c1);
-
-$resultado3 = array_map(function($m1l1, $m2c2) {
-    return $m1l1 * $m2c2;
-}, $m1l1, $m2c2);
-
-$resultado4 = array_map(function($m1l2, $m2c2) {
-    return $m1l2 * $m2c2;
-}, $m1l2, $m2c2);
-
-
-
-print_r($conta);
-
-// for ($i = count($matriz1); $i > 0; $i--) {
-//     for ($j = count($matriz2); $j > 0; $j--) {
-//         $resultado = $i * $j;
-//         var_dump($resultado);
-//     }
-    
-// }
-
-
+#Conta de referência
 /*
 1 2     1 2
 3 4     3 4
@@ -67,7 +48,64 @@ print_r($conta);
 3*1 + 4*3   3*2 + 4*4
 
 1 + 6       2 + 8
-3 + 12      6 +16
+3 + 12      6 + 16
 
+7   10
+15  22
 */
-#var_dump($matriz1);
+
+
+#Matriz não quadrada:
+
+# Define matrizes
+$mnq1l1 = array(1, 2, 3);
+$mnq1l2 = array(4, 5, 6);
+$mnq2c1 = array(1, 3, 5);
+$mnq2c2 = array(2, 4, 6);
+
+#Multiplica as linhas com as colunas
+$contanq1 = array_map(function($mnq1l1, $mnq2c1) {
+    return $mnq1l1 * $mnq2c1;
+}, $mnq1l1, $mnq2c1);
+
+$contanq2 = array_map(function($mnq1l2, $mnq2c1) {
+    return $mnq1l2 * $mnq2c1;
+}, $mnq1l2, $mnq2c1);
+
+$contanq3 = array_map(function($mnq1l1, $mnq2c2) {
+    return $mnq1l1 * $mnq2c2;
+}, $mnq1l1, $mnq2c2);
+
+$contanq4 = array_map(function($mnq1l2, $mnq2c2) {
+    return $mnq1l2 * $mnq2c2;
+}, $mnq1l2, $mnq2c2);
+
+#Soma os resultados
+$resultadonq1 = array_sum($contanq1);
+$resultadonq2 = array_sum($contanq2);
+$resultadonq3 = array_sum($contanq3);
+$resultadonq4 = array_sum($contanq4);
+
+#Imprime os resultados
+echo <<< EOL
+    Matriz não quadrada:
+    $resultadonq1 | $resultadonq3
+    $resultadonq2 | $resultadonq4
+
+EOL;
+
+#Conta de referência
+/*
+1 2 3   1 2
+4 5 6   3 4
+        5 6
+
+1*1 + 2*3 + 3*5     1*2 + 2*4 + 3*6
+4*1 + 5*3 + 6*5     4*2 + 5*4 + 6*6
+
+1 + 6 + 15       2 + 8 + 18
+4 + 15 + 30      8 + 20 + 36
+
+22  28
+49  64
+*/
