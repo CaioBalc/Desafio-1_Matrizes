@@ -15,9 +15,14 @@ $url = "https://pokeapi.co/api/v2/pokemon?limit=150&offset=0";
 $pokemons = json_decode(file_get_contents($url));
 file_put_contents("pokemons.txt", var_export($pokemons, true));
 
+/*
+$pokemons = array_map(function($nome, $url) {
+    return $nome, $url;
+}, $nome, $url);
+/*
 
     for($i = 1; $i <= $qtd_registros; $i++){
-        var_dump($pokemons);
+        var_dump($nome, $url);
         echo '<br>';
         if($i >= $qtd_registros){
             echo "Fim da aplicação";
