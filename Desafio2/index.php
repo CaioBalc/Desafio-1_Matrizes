@@ -1,34 +1,59 @@
 <?php
 
-/*
-$pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-$qtd_registros = 3;
-
-$indice = ($pagina - 1) * $qtd_registros;
-*/
-
 $url = "https://pokeapi.co/api/v2/pokemon?limit=150&offset=0";
 
-// $ch = curl_init($url);
-// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-// curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-$pokemons = json_decode(file_get_contents($url));
-file_put_contents("pokemons.txt", var_export($pokemons, true));
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+if(!file_exists("pokemons.txt")){
+    $pokemons = json_decode(file_get_contents($url));
+    file_put_contents("pokemons.txt", $pokemons->results);
+}
 
-/*
-$pokemons = array_map(function($nome, $url) {
-    return $nome, $url;
-}, $nome, $url);
-/*
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$pokemons = json_decode(curl_exec($ch));
 
-    for($i = 1; $i <= $qtd_registros; $i++){
-        var_dump($nome, $url);
-        echo '<br>';
-        if($i >= $qtd_registros){
-            echo "Fim da aplicação";
-        }
+#Pesquiar:
+fopen()
+fwrite()
+
+foreach($pokemons->results as $postar){
+    #echo "name: " . $postar->name . "<br>";
+    #echo "<hr>";
+    print_r("<br>url: $postar->url");
+    print_r("<br>name: $postar->name");
+    #print_r("<br><img src = $postar->img /><hr>");
+}
+
+for ($i = 1; $i <= 10; $i++) {
+    if ($i == $limite) {
+        echo $i;
+    } else {
+        echo "<a href='?pagina=" . $i . "'>" . $i . "</a> ";
     }
+}
+#var_dump($pokemons);
 
+$teste = file("/pokemons.txt", "w");
+
+$pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+
+$limite = 15;
+
+$indice = ($limite * $pagina) - $limite;
+
+$quantidade_pg = 10;
+
+
+$pg = array_slice($pokemons, $indice, $limite);
+#var_dump($pg);
+
+
+/*
+echo "<br>";
+echo "<a href='index.php?pagina=1'>Primeira</a>";
+*/
 
 /*
 for ($i = 1; $i <= $total_pag; $i++) {
@@ -47,7 +72,18 @@ for ($i = 1; $i <= $total_pag; $i++) {
     <title>API-Pokémon</title>
 </head>
 <body>
-
+    <div class="paginacao">
+        <?php for ($i = 1; $i <= ceil(150/ $limite); $i++) : ?>
+            <a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+        <?php endfor; ?>
+    </div>
+    <!--
+    <ol>
+        <?php #oreach($pokemons as $id): ?>
+            <li><?=$id["id"]?></li>
+        <?php #endforeach; ?>
+    </ol>
+    -->
 <!--
     <div class="container">
         <h2>Pokémons</h2>
